@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сезони каналу</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,700;1,500&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0c14; --bg2:#15131f; --card:#1a1826; --line:rgba(243,231,201,.12);
+    --ink:#f3e7c9; --muted:#a79f8b; --accent:#d4a94a;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Manrope,system-ui,sans-serif;
+    background-image:radial-gradient(1200px 600px at 80% -10%,rgba(212,169,74,.10),transparent 60%),
+                     radial-gradient(900px 500px at -10% 20%,rgba(80,70,160,.12),transparent 60%);}
+  a{color:var(--accent)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  header{display:flex;align-items:center;justify-content:space-between;padding:18px 0;gap:12px}
+  .brand{font:700 22px Cormorant,serif;letter-spacing:.04em}
+  nav{display:flex;gap:18px;font-size:14px}
+  nav a{color:var(--muted);text-decoration:none} nav a:hover{color:var(--ink)}
+  .right{display:flex;gap:10px;align-items:center}
+  .lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .lang button{background:none;border:0;color:var(--muted);padding:6px 12px;font:700 12px Manrope;cursor:pointer}
+  .lang button.on{background:var(--accent);color:#1a1408}
+  .btn{display:inline-block;background:var(--accent);color:#1a1408;text-decoration:none;font-weight:700;padding:9px 16px;border-radius:999px;font-size:14px}
+  .btn.ghost{background:none;color:var(--ink);border:1px solid var(--line)}
+
+  .hero{padding:56px 0 36px;display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:end}
+  .eyebrow{display:inline-flex;gap:10px;align-items:center;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  .live{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(212,169,74,.7);animation:pulse 2s infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 10px rgba(212,169,74,0)}100%{box-shadow:0 0 0 0 rgba(212,169,74,0)}}
+  h1{font:700 clamp(44px,7vw,84px)/.95 Cormorant,serif;margin:14px 0 16px;letter-spacing:-.01em}
+  h1 em{font-style:italic;font-weight:500;color:var(--accent)}
+  .lead{color:var(--muted);font-size:17px;max-width:520px}
+  .games{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+  .games li{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+  .chip{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px;white-space:nowrap;align-self:center}
+  .chip.done{background:rgba(120,200,140,.14);color:#9fdcae}
+  .chip.playing{background:rgba(212,169,74,.18);color:var(--accent)}
+  .chip.planned{background:rgba(255,255,255,.06);color:var(--muted)}
+
+  section{padding:44px 0}
+  h2{font:700 38px/1 Cormorant,serif;margin:0 0 6px}
+  .sub{color:var(--muted);margin:0 0 24px;font-size:14px}
+
+  .cup{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .house{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;position:relative;overflow:hidden}
+  .house::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:var(--c)}
+  .house.lead{border-color:color-mix(in srgb,var(--c) 70%,transparent);box-shadow:0 10px 40px -12px var(--c)}
+  .house .em{font-size:30px}
+  .house .nm{font:700 24px Cormorant,serif;margin:6px 0 2px}
+  .house .pts{font:700 44px/1 Cormorant,serif}
+  .house .meta{color:var(--muted);font-size:13px;margin-top:4px}
+  .house .bar{height:6px;background:rgba(255,255,255,.07);border-radius:3px;margin-top:14px}
+  .house .bar i{display:block;height:100%;border-radius:3px;background:var(--c);transition:width 1s}
+  .badge{position:absolute;top:14px;right:14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--c);color:#fff;padding:3px 9px;border-radius:999px}
+  .updated{color:var(--muted);font-size:12px;margin-top:14px}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px}
+  .search{display:flex;gap:8px;margin-top:6px}
+  .search input{flex:1;background:var(--bg2);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:12px 14px;font:15px Manrope}
+  .search input:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .result{margin-top:16px;min-height:72px}
+  .rcard{display:flex;gap:14px;align-items:center;padding:14px;border-radius:14px;background:color-mix(in srgb,var(--c) 18%,var(--bg2));border:1px solid color-mix(in srgb,var(--c) 45%,transparent)}
+  .rcard .em{font-size:34px}
+  .rcard b{font:700 22px Cormorant,serif;display:block}
+  .muted{color:var(--muted)}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  td{padding:9px 4px;border-bottom:1px solid var(--line)}
+  td.n{color:var(--muted);width:28px} td.p{text-align:right;font-weight:700}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;background:var(--c)}
+
+  .rules{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .rule{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;font-size:14px}
+  .rule span{font-size:22px;line-height:1}
+
+  .sched{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .slot{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .slot .t{font:700 34px/1 Cormorant,serif;color:var(--accent)}
+  .slot .d{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+  .seasons{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+  .scard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;border-top:4px solid var(--c)}
+  .scard .lbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--c)}
+  .scard h3{font:700 30px/1.05 Cormorant,serif;margin:6px 0 8px}
+  .mini{margin-top:12px;font-size:14px}
+  .mini div{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed var(--line)}
+  .empty{color:var(--muted);font-style:italic}
+
+  footer{padding:40px 0 60px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);margin-top:30px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  footer .links{display:flex;gap:14px}
+  .demo{background:rgba(212,169,74,.12);border:1px solid rgba(212,169,74,.35);color:var(--accent);padding:8px 14px;border-radius:10px;font-size:13px;margin-top:10px}
+
+  @media (max-width:860px){
+    .hero,.two{grid-template-columns:1fr}
+    .cup{grid-template-columns:repeat(2,1fr)}
+    .rules{grid-template-columns:1fr}
+    nav{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand" id="brand">…</div>
+    <nav>
+      <a href="#cup" data-t="navCup"></a>
+      <a href="#me" data-t="navMe"></a>
+      <a href="#schedule" data-t="navSchedule"></a>
+      <a href="#seasons" data-t="navSeasons"></a>
+    </nav>
+    <div class="right">
+      <div class="lang"><button data-lang="uk">UA</button><button data-lang="ru">RU</button></div>
+      <a class="btn" id="twitchBtn" href="#" target="_blank" rel="noopener">Twitch</a>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div>
+      <div class="eyebrow"><span class="live"></span><span id="sLabel"></span></div>
+      <h1 id="sTitle"></h1>
+      <p class="lead" id="sDesc"></p>
+      <div id="demoNote"></div>
+    </div>
+    <div>
+      <p class="sub" data-t="gamesTitle" style="margin-bottom:8px"></p>
+      <ul class="games" id="games"></ul>
+    </div>
+  </div>
+
+  <section id="cup">
+    <h2 id="cupName"></h2>
+    <p class="sub" id="cupSub"></p>
+    <div class="cup" id="houses"></div>
+    <div class="updated" id="updated"></div>
+  </section>
+
+  <section id="me">
+    <div class="two">
+      <div class="panel">
+        <h2 style="font-size:30px" data-t="findTitle"></h2>
+        <p class="sub" data-t="findSub"></p>
+        <form class="search" id="findForm">
+          <input id="findInput" autocomplete="off" spellcheck="false">
+        </form>
+        <div class="result" id="findResult"></div>
+      </div>
+      <div class="panel">
+        <h2 style="font-size:30px" data-t="topTitle"></h2>
+        <p class="sub" data-t="topSub"></p>
+        <table id="top"></table>
+      </div>
+    </div>
+  </section>
+
+  <section id="rules">
+    <h2 data-t="rulesTitle"></h2>
+    <p class="sub" data-t="rulesSub"></p>
+    <div class="rules" id="rulesList"></div>
+  </section>
+
+  <section id="schedule">
+    <h2 data-t="schedTitle"></h2>
+    <p class="sub" id="tz"></p>
+    <div class="sched" id="sched"></div>
+  </section>
+
+  <section id="seasons">
+    <h2 data-t="seasonsTitle"></h2>
+    <p class="sub" id="aboutText"></p>
+    <div class="seasons" id="seasonList"></div>
+  </section>
+
+  <footer>
+    <div><span id="footName"></span> · <span data-t="fan"></span></div>
+    <div class="links" id="links"></div>
+  </footer>
+</div>
+
+<script>
+const I18N = {
+  uk: {
+    navCup:"Кубок", navMe:"Мій факультет", navSchedule:"Розклад", navSeasons:"Сезони",
+    active:"Активний сезон", gamesTitle:"Ігри сезону",
+    done:"Пройдено", playing:"Граємо", planned:"Далі",
+    members:n=>`${n} ${plural(n,["учень","учні","учнів"])}`,
+    leader:"Лідер", points:"очок",
+    cupSub:"Кожне повідомлення, фолоу, підписка і правильна відповідь у вікторині наближають твій факультет до перемоги.",
+    updated:"Оновлено", loading:"Завантаження…",
+    findTitle:"Знайди себе", findSub:"Введи свій нік на Twitch, щоб дізнатися факультет і внесок.",
+    findPh:"нік на Twitch", notFound:n=>`<b style="font:700 20px Cormorant,serif">@${n} ще не розподілено</b><div class="muted">Напиши в чаті <b>!капелюх</b> — і Капелюх зробить вибір 🎩</div>`,
+    yourPts:(p,r)=>`внесок: <b style="display:inline;font:inherit">${p}</b> очок · #${r} на факультеті`,
+    topTitle:"Найкращі учні", topSub:"Хто приніс своєму факультету найбільше очок.",
+    rulesTitle:"Як заробити очки", rulesSub:"Усе нараховується автоматично під час стріму.",
+    schedTitle:"Розклад", seasonsTitle:"Усі сезони",
+    upcoming:"Скоро", finished:"Завершено", winner:"Переможець", noArchive:"Архів поповниться після завершення першого розділу.",
+    noData:"Даних кубка ще немає — вони з'являться після першого стріму.",
+    demo:"Зараз показано демо-дані. Після першого стріму тут будуть справжні результати.",
+    fan:"Фанатський проєкт, не пов'язаний із правовласниками ігор."
+  },
+  ru: {
+    navCup:"Кубок", navMe:"Мой факультет", navSchedule:"Расписание", navSeasons:"Сезоны",
+    active:"Активный сезон", gamesTitle:"Игры сезона",
+    done:"Пройдено", playing:"Играем", planned:"Дальше",
+    members:n=>`${n} ${plural(n,["ученик","ученика","учеников"])}`,
+    leader:"Лидер", points:"очков",
+    cupSub:"Каждое сообщение, фоллоу, подписка и правильный ответ в викторине приближают твой факультет к победе.",
+    updated:"Обновлено", loading:"Загрузка…",
+    findTitle:"Найди себя", findSub:"Введи свой ник на Twitch, чтобы узнать факультет и вклад.",
+    findPh:"ник на Twitch", notFound:n=>`<b style="font:700 20px Cormorant,serif">@${n} ещё не распределён</b><div class="muted">Напиши в чате <b>!шляпа</b> — и Шляпа сделает выбор 🎩</div>`,
+    yourPts:(p,r)=>`вклад: <b style="display:inline;font:inherit">${p}</b> очков · #${r} на факультете`,
+    topTitle:"Лучшие ученики", topSub:"Кто принёс своему факультету больше всего очков.",
+    rulesTitle:"Как заработать очки", rulesSub:"Всё начисляется автоматически во время стрима.",
+    schedTitle:"Расписание", seasonsTitle:"Все сезоны",
+    upcoming:"Скоро", finished:"Завершён", winner:"Победитель", noArchive:"Архив пополнится после завершения первой главы.",
+    noData:"Данных кубка пока нет — они появятся после первого стрима.",
+    demo:"Сейчас показаны демо-данные. После первого стрима здесь будут настоящие результаты.",
+    fan:"Фанатский проект, не связанный с правообладателями игр."
+  }
+};
+function plural(n,f){const a=n%10,b=n%100;return a===1&&b!==11?f[0]:a>=2&&a<=4&&(b<10||b>=20)?f[1]:f[2]}
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $=id=>document.getElementById(id);
+
+let lang = (()=>{try{return localStorage.getItem("lang")}catch(e){return null}})() || ((navigator.language||"").startsWith("ru")?"ru":"uk");
+let CFG=null, LIVE=null;
+const L=o=>o==null?"":typeof o==="string"?o:(o[lang]??o.uk??"");
+const T=k=>I18N[lang][k];
+
+async function loadJSON(url){const r=await fetch(url,{cache:"no-store"});if(!r.ok)throw new Error(r.status);return r.json()}
+
+async function loadLive(){
+  const url=CFG.dataUrl||"";
+  if(url && !url.includes("ВАШ_")){
+    try{ LIVE=await loadJSON(url+(url.includes("?")?"&":"?")+"t="+Date.now()); return; }catch(e){ console.warn("live data:",e) }
+  }
+  try{ LIVE=await loadJSON("data/live.json?t="+Date.now()) }catch(e){ LIVE=null }
+}
+
+function seasonData(id){return LIVE&&LIVE.seasons&&LIVE.seasons[id]||null}
+function totals(season){
+  const d=seasonData(season.id)||{teams:{},members:{}};
+  return (season.teams||[]).map(t=>({...t,points:(d.teams||{})[t.id]||0,
+    members:Object.values(d.members||{}).filter(m=>m.team===t.id).length}));
+}
+
+function render(){
+  document.documentElement.lang=lang;
+  document.querySelectorAll(".lang button").forEach(b=>b.classList.toggle("on",b.dataset.lang===lang));
+  document.querySelectorAll("[data-t]").forEach(el=>{const v=T(el.dataset.t);if(typeof v==="string")el.textContent=v});
+  $("findInput").placeholder=T("findPh");
+
+  const ch=CFG.channel||{};
+  $("brand").textContent=ch.name||""; $("footName").textContent=ch.name||"";
+  $("twitchBtn").href=ch.twitch||"#";
+  document.title=`${ch.name||""} — ${T("navSeasons")}`;
+  $("links").innerHTML=(ch.links||[]).filter(l=>l.url).map(l=>`<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(L(l.label))}</a>`).join("");
+
+  const s=CFG.seasons.find(x=>x.id===CFG.activeSeason)||CFG.seasons[0];
+  document.documentElement.style.setProperty("--accent",s.accent||"#d4a94a");
+  $("sLabel").textContent=`${L(s.label)} · ${T("active")}`;
+  const title=L(s.title);
+  $("sTitle").innerHTML=`<em>${esc(L(s.label))}:</em><br>${esc(title)}`;
+  $("sDesc").textContent=L(s.description);
+  $("games").innerHTML=(s.games||[]).map(g=>`<li><span>${esc(g.name)}</span><span class="chip ${esc(g.status)}">${esc(T(g.status)||g.status)}</span></li>`).join("");
+  $("demoNote").innerHTML=LIVE&&LIVE.demo?`<div class="demo">${esc(T("demo"))}</div>`:"";
+
+  // cup
+  $("cupName").textContent=L(s.cupName)||T("navCup");
+  $("cupSub").textContent=T("cupSub");
+  const ts=totals(s), max=Math.max(1,...ts.map(t=>t.points)), top=Math.max(...ts.map(t=>t.points));
+  $("houses").innerHTML=ts.map(t=>{const lead=t.points===top&&top>0;return `
+    <div class="house${lead?" lead":""}" style="--c:${esc(t.color)}">
+      ${lead?`<span class="badge">👑 ${esc(T("leader"))}</span>`:""}
+      <div class="em">${esc(t.emoji)}</div>
+      <div class="nm">${esc(L(t.name))}</div>
+      <div class="pts">${t.points}</div>
+      <div class="meta">${esc(T("points"))} · ${esc(T("members")(t.members))}</div>
+      <div class="bar"><i style="width:${100*t.points/max}%"></i></div>
+    </div>`}).join("");
+  $("updated").textContent=LIVE&&LIVE.updated?`${T("updated")}: ${new Date(LIVE.updated).toLocaleString(lang==="ru"?"ru-RU":"uk-UA",{dateStyle:"medium",timeStyle:"short"})}`:T("noData");
+
+  // top
+  const d=seasonData(s.id), teamById=Object.fromEntries((s.teams||[]).map(t=>[t.id,t]));
+  const list=d?Object.values(d.members||{}).sort((a,b)=>b.points-a.points).slice(0,10):[];
+  $("top").innerHTML=list.length?list.map((m,i)=>{const t=teamById[m.team]||{};return `<tr style="--c:${esc(t.color)}"><td class="n">${i+1}</td><td><span class="dot"></span>${esc(m.name)}</td><td class="muted">${esc(L(t.name))}</td><td class="p">${m.points}</td></tr>`}).join(""):`<tr><td class="empty">${esc(T("noData"))}</td></tr>`;
+
+  // rules, schedule
+  $("rulesList").innerHTML=(CFG.rules||[]).map(r=>`<div class="rule"><span>${esc(r.icon)}</span><div>${esc(L(r))}</div></div>`).join("");
+  $("tz").textContent=L(CFG.timezone);
+  $("sched").innerHTML=(CFG.schedule||[]).map(x=>`<div class="slot"><div class="d">${esc(L(x.day))}</div><div class="t">${esc(x.time)}</div><div>${esc(x.game)}</div></div>`).join("");
+
+  // seasons
+  $("aboutText").textContent=L(CFG.about);
+  $("seasonList").innerHTML=CFG.seasons.map(se=>{
+    const st=se.status, c=se.accent||"#888";
+    let body="";
+    if(st==="done"){
+      const tt=totals(se).sort((a,b)=>b.points-a.points);
+      const w=se.winner?tt.find(t=>t.id===se.winner):tt[0];
+      body=(w?`<p><b>${esc(T("winner"))}:</b> ${esc(w.emoji)} ${esc(L(w.name))}</p>`:"")+
+        `<div class="mini">${tt.map(t=>`<div><span>${esc(t.emoji)} ${esc(L(t.name))}</span><b>${t.points}</b></div>`).join("")}</div>`;
+    } else if(st==="active"){
+      const tt=totals(se).sort((a,b)=>b.points-a.points);
+      body=tt.length&&tt[0].points>0?`<p class="muted">${esc(T("leader"))}: ${esc(tt[0].emoji)} ${esc(L(tt[0].name))} — ${tt[0].points}</p>`:"";
+    }
+    const status=st==="active"?T("active"):st==="done"?T("finished"):T("upcoming");
+    const games=(se.games||[]).length?`<div class="mini">${se.games.map(g=>`<div><span>${esc(g.name)}</span><span class="muted">${esc(T(g.status)||"")}</span></div>`).join("")}</div>`:"";
+    return `<div class="scard" style="--c:${esc(c)}"><div class="lbl">${esc(L(se.label))} · ${esc(status)}</div><h3>${esc(L(se.title))}</h3>
+      ${se.period?`<div class="muted" style="font-size:13px">${esc(L(se.period))}</div>`:""}
+      <p class="muted" style="font-size:14px">${esc(L(se.description))}</p>${body}${st!=="active"?games:""}</div>`;
+  }).join("");
+  if(!CFG.seasons.some(x=>x.status==="done")) $("seasonList").insertAdjacentHTML("beforeend",`<div class="scard" style="--c:#555"><div class="lbl">${esc(T("finished"))}</div><p class="empty">${esc(T("noArchive"))}</p></div>`);
+
+  find();
+}
+
+function find(){
+  const raw=$("findInput").value.trim().replace(/^@/,"");
+  const box=$("findResult");
+  if(!raw){box.innerHTML="";return}
+  const s=CFG.seasons.find(x=>x.id===CFG.activeSeason)||CFG.seasons[0];
+  const d=seasonData(s.id); const m=d&&d.members?d.members[raw.toLowerCase()]:null;
+  if(!m){box.innerHTML=`<div class="rcard" style="--c:#666">${T("notFound")(esc(raw))}</div>`;return}
+  const t=(s.teams||[]).find(x=>x.id===m.team)||{};
+  const rank=Object.values(d.members).filter(x=>x.team===m.team).sort((a,b)=>b.points-a.points).findIndex(x=>x===m)+1;
+  box.innerHTML=`<div class="rcard" style="--c:${esc(t.color)}"><div class="em">${esc(t.emoji)}</div><div><b>${esc(m.name)} — ${esc(L(t.name))}</b><div class="muted">${T("yourPts")(m.points,rank)}</div></div></div>`;
+}
+
+document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;try{localStorage.setItem("lang",lang)}catch(e){}render()});
+$("findForm").onsubmit=e=>{e.preventDefault();find()};
+$("findInput").oninput=find;
+
+(async()=>{
+  CFG=await loadJSON("config.json?t="+Date.now());
+  await loadLive(); render();
+  setInterval(async()=>{await loadLive();render()},120000);
+})();
+</script>
+</body>
+</html>
