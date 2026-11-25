@@ -1,14 +1,14 @@
 {
   "channel": {
-    "name": "ТВІЙ_НІК",
-    "twitch": "https://twitch.tv/ТВІЙ_НІК",
+    "name": "mariiissshka",
+    "twitch": "https://twitch.tv/mariiissshka",
     "links": [
-      { "label": "Twitch", "url": "https://twitch.tv/ТВІЙ_НІК" },
+      { "label": "Twitch", "url": "https://twitch.tv/mariiissshka" },
       { "label": "TikTok", "url": "" },
       { "label": "Discord", "url": "" }
     ]
   },
-  "dataUrl": "https://raw.githubusercontent.com/ВАШ_GITHUB_ЛОГІН/stream-seasons/data/live.json",
+  "dataUrl": "https://raw.githubusercontent.com/mariiishka/stream-seasons/data/live.json",
   "activeSeason": "hp",
   "about": {
     "uk": "Кожен сезон — новий всесвіт. Проходимо ігри однієї франшизи, змагаємося командами та збираємо історію каналу разом.",
