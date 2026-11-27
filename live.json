@@ -1,1 +1,87 @@
-
+{
+  "updated": "2026-11-26T22:48:39.7582159Z",
+  "activeSeason": "hp",
+  "seasons": {
+    "hp": {
+      "started": "2026-11-25T18:38:13.5153805Z",
+      "teams": {
+        "gryffindor": 170,
+        "slytherin": 24,
+        "hufflepuff": 35,
+        "ravenclaw": 106
+      },
+      "members": {
+        "mariiissshka": {
+          "name": "mariiissshka",
+          "team": "hufflepuff",
+          "points": 29,
+          "followed": false,
+          "joined": "2026-11-25T18:38:13.5233601Z"
+        },
+        "holy_ava": {
+          "name": "holy_ava",
+          "team": "gryffindor",
+          "points": 156,
+          "followed": false,
+          "joined": "2026-11-25T19:14:15.3564886Z"
+        },
+        "res1den7ded": {
+          "name": "res1den7ded",
+          "team": "slytherin",
+          "points": 10,
+          "followed": false,
+          "joined": "2026-11-25T19:14:28.3710516Z"
+        },
+        "d4yzer_": {
+          "name": "D4yZer_",
+          "team": "ravenclaw",
+          "points": 79,
+          "followed": false,
+          "joined": "2026-11-25T19:14:35.3225311Z"
+        },
+        "dampstone": {
+          "name": "dampstone",
+          "team": "ravenclaw",
+          "points": 27,
+          "followed": false,
+          "joined": "2026-11-25T19:25:08.1228961Z"
+        },
+        "d00mka": {
+          "name": "D00Mka",
+          "team": "slytherin",
+          "points": 1,
+          "followed": false,
+          "joined": "2026-11-25T19:44:27.7727562Z"
+        },
+        "lu1xxx1ury": {
+          "name": "lu1xxx1ury",
+          "team": "gryffindor",
+          "points": 14,
+          "followed": false,
+          "joined": "2026-11-25T20:15:24.0826716Z"
+        },
+        "d1oxygen": {
+          "name": "d1oxygen",
+          "team": "slytherin",
+          "points": 11,
+          "followed": false,
+          "joined": "2026-11-25T21:43:50.9677286Z"
+        },
+        "x1dore": {
+          "name": "x1dore",
+          "team": "hufflepuff",
+          "points": 6,
+          "followed": false,
+          "joined": "2026-11-26T20:26:33.1721422Z"
+        },
+        "twist_xdd": {
+          "name": "Twist_xdd",
+          "team": "slytherin",
+          "points": 2,
+          "followed": false,
+          "joined": "2026-11-26T22:46:01.1022900Z"
+        }
+      }
+    }
+  }
+}
